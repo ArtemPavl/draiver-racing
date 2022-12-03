@@ -2,9 +2,50 @@ package transport;
 
 public class Cars extends Transport implements Competing{
 
+    public enum BodyTypes{
+        SEDAN("Седан"),
+        HATCHBACK("Хетчбек"),
+        COUPE("Купе"),
+        UNIVERSAL("Универсал"),
+        SUV("Внедорожник"),
+        CROSSOVER("Кросовер"),
+        PICKUP("Пикап"),
+        VAN("Фургон"),
+        MINIVAN("Минивэн");
+
+        private final String bodyType;
+        BodyTypes (String bodyType){
+            this.bodyType = bodyType;
+        }
+
+        public String getBodyType() {
+            return bodyType;
+        }
+        @Override
+        public String toString() {
+            return "\nТип кузова: " + getBodyType();
+        }
+
+    };
+    private BodyTypes bodyType;
+
+
+    public Cars(String brand, String model, double engineVolume, BodyTypes bodyType) {
+        super(brand, model, engineVolume);
+        this.bodyType = bodyType;
+    }
 
     public Cars(String brand, String model, double engineVolume) {
-        super(brand, model, engineVolume);
+        this(brand, model, engineVolume, null);
+    }
+
+    @Override
+    public void printType() {
+        if (bodyType != null) {
+            System.out.println(getBodyType().toString());
+        }else {
+            System.out.println("\nДанных по транспортному средству не достаточно");
+        }
     }
 
     @Override
@@ -22,5 +63,15 @@ public class Cars extends Transport implements Competing{
     @Override
     public void getMaxSpeed(int maxSpeed) {
         System.out.println("Макимальная скорость " + getBrand() + ": " + maxSpeed);
+    }
+
+    public BodyTypes getBodyType() {
+        return bodyType;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() +
+                getBodyType().toString();
     }
 }

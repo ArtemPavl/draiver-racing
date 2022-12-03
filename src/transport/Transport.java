@@ -59,11 +59,12 @@ public abstract class Transport<T> {
         System.out.println(getBrand() + " остаовился");
     }
 
+    public abstract void printType();
 
     public  String toString(){
         return "\n" + this.brand +
                 "\nМодель: " + this.model +
-                "\nГод выпуска: " + this.engineVolume;
+                "\nОбъем двигателя: " + this.engineVolume;
     }
 
     @Override
