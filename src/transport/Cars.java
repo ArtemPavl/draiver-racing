@@ -1,5 +1,7 @@
 package transport;
 
+import java.sql.Driver;
+
 public class Cars extends Transport implements Competing{
 
     public enum BodyTypes{
@@ -28,7 +30,7 @@ public class Cars extends Transport implements Competing{
 
     };
     private BodyTypes bodyType;
-
+    private Driver driver;
 
     public Cars(String brand, String model, double engineVolume, BodyTypes bodyType) {
         super(brand, model, engineVolume);
@@ -46,6 +48,11 @@ public class Cars extends Transport implements Competing{
         }else {
             System.out.println("\nДанных по транспортному средству не достаточно");
         }
+    }
+
+    @Override
+    public void passDiagnostics() {
+        this.setDiagnostics(true);
     }
 
     @Override
@@ -68,6 +75,7 @@ public class Cars extends Transport implements Competing{
     public BodyTypes getBodyType() {
         return bodyType;
     }
+
 
     @Override
     public String toString() {

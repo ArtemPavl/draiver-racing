@@ -1,10 +1,7 @@
-import transport.Cars;
-import transport.Transport;
-import transport.Trucks;
-import transport.Buses;
+import transport.*;
 
 public class Main {
-    public static void main(String[] agrs){
+    public static void main(String[] agrs) {
         System.out.println("Приложение для автогонок");
 
         Cars vesta = new Cars("Lada", "Vesta", 2.0, Cars.BodyTypes.SEDAN);
@@ -22,9 +19,9 @@ public class Main {
         Buses liaz = new Buses("ЛиАЗ", "4292", 7.8, Buses.BodyTypes.BIG);
         Buses yutong = new Buses("Yutong", "6122", 8.2, Buses.BodyTypes.ESPECIALLY_BIG);
 
-        Driver<Buses> artem = new Driver<>("Павленко Артем Евгеньевич", "есть", 10);
-        Driver<Cars> margarita = new Driver<>("Павленко Марграрита Юрьевна", "есть", 12);
-        Driver<Trucks> ivan = new Driver<>("Финашин Иван Леонидович", "есть", 8);
+        Driver<Buses> artem = new Driver<>("Павленко Артем Евгеньевич", "B", 10);
+        Driver<Cars> margarita = new Driver<>("Павленко Марграрита Юрьевна", "C", 12);
+        Driver<Trucks> ivan = new Driver<>("Финашин Иван Леонидович", "D", 8);
 
         margarita.setTransport(vesta);
         artem.setTransport(liaz);
@@ -36,6 +33,13 @@ public class Main {
         solaris.printType();
         kamaz.printType();
         kingLong.printType();
+
+        solaris.passDiagnostics();
+        kamaz.passDiagnostics();
+
+        chekDiagnostics(solaris, kamaz, meredes);
+
+
     }
 
     public  static void participateInTheRace(Driver[] drivers){
@@ -43,6 +47,28 @@ public class Main {
             System.out.println("Водитель " + driver.getName() + " управляет автомобилем "
                     + driver.getTransport().getBrand() + " " + driver.getTransport().getModel()
                     + " и будет участвовать в заезде");
+        }
+    }
+
+    public static void chekDiagnostics(Transport... transports){
+        int count = 0;
+        try {
+            for (Transport transport : transports) {
+                if (transport.isDiagnostics()){
+                    count++;
+                }else {
+                    throw new RuntimeException("Машина " + transport.getBrand() + " " +
+                            transport.getModel() + " не прошла диагностику");
+                }
+            }
+        }catch (RuntimeException e){
+            System.out.println(e.getMessage());
+        }finally {
+            if (transports.length == count) {
+                System.out.println("Все машины прошли диагностику");
+            }else {
+                System.out.println(count + " машин прошли диагностику");
+            }
         }
     }
 }

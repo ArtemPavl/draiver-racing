@@ -1,36 +1,28 @@
 import transport.Transport;
 
 import java.util.Arrays;
+import java.util.regex.Pattern;
 
 public class Driver<T extends Transport> {
 
     private String name;
-    private String driverLicense;
+    private String typeDriverLicense;
     private int drivingExperience;
     private T transport;
     private static Driver[] driversParticipatingInTheRace = new Driver[0];
 
 
 
-    public Driver(String name, String driverLicense, int drivingExperience) {
+    public Driver(String name, String typeDriverLicense, int drivingExperience) {
         if(name != null && !name.isEmpty() && !name.isBlank()){
             this.name = name;
         }else {
             this.name = "Водитель";
         }
 
-        if(driverLicense  != null && !driverLicense .isEmpty() &&
-                !driverLicense .isBlank() && !driverLicense.equals("есть")){
-            this.driverLicense  = driverLicense ;
-        }else {
-            this.driverLicense  = "нет";
-        }
+        setTypeDriverLicense(typeDriverLicense);
 
-        if(drivingExperience > 0){
-            this.drivingExperience = drivingExperience;
-        }else {
-            this.drivingExperience = Math.abs(drivingExperience);
-        }
+        setDrivingExperience(drivingExperience);
     }
 
     public static void addDriversparticipatingInTheRace(Driver... drivers){
@@ -69,16 +61,15 @@ public class Driver<T extends Transport> {
         return name;
     }
 
-    public String getDriverLicense() {
-        return driverLicense;
+    public String getTypeDriverLicense() {
+        return typeDriverLicense;
     }
 
-    public void setDriverLicense(String driverLicense) {
-        if(driverLicense  != null && !driverLicense .isEmpty() &&
-                !driverLicense .isBlank() && !driverLicense.equals("есть")){
-            this.driverLicense  = driverLicense ;
+    public void setTypeDriverLicense(String typeDriverLicense) {
+        if(typeDriverLicense != null && Pattern.matches("[BCD]", typeDriverLicense)){
+            this.typeDriverLicense = typeDriverLicense;
         }else {
-            this.driverLicense  = "нет";
+            throw new IllegalArgumentException("Необходимо указать тип прав!");
         }
     }
 
@@ -93,18 +84,4 @@ public class Driver<T extends Transport> {
             this.drivingExperience = Math.abs(drivingExperience);
         }
     }
-
-//    Водители будут отличаться друг от друга по типу прав (соответственно, это три разных класса):
-//
-//    для легковых авто нужна категория В,
-//    для грузовых нужна категория С,
-//    для автобусов — D.
-//
-//    Водитель с определенным типом прав может управлять только одним авто в выбранной категории.
-//    Управлять авто других категорий в наших соревнованиях он не может.
-//    Подсказка
-//
-//    Напишите приложение, которое выводит в консоль информацию в формате:
-//
-//            “водитель А управляет автомобилем Б и будет участвовать в заезде”.
 }

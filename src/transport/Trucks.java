@@ -78,6 +78,11 @@ public class Trucks extends Transport implements Competing{
     }
 
     @Override
+    public void passDiagnostics() {
+        this.setDiagnostics(true);
+    }
+
+    @Override
     public String toString() {
         return super.toString() + getBodyType().toString();
     }

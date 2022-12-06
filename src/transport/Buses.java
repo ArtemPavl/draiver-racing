@@ -62,6 +62,11 @@ public class Buses extends Transport implements Competing{
     }
 
     @Override
+    public void passDiagnostics() throws NoDiagnosticsRequired {
+        throw new NoDiagnosticsRequired("Автобус " + getBrand() + " не нуждается в диагностике.", this);
+    }
+
+    @Override
     public void getBestLapTime(double bestLapTime){
         System.out.println("Лучшее время круга " + getBrand() + ": " + bestLapTime);
     }

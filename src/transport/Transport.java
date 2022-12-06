@@ -9,6 +9,7 @@ public abstract class Transport<T> {
     private String model;
     private double engineVolume;
     private Driver driver;
+    private boolean diagnostics = false;
 
     public Transport(String brand, String model, double engineVolume) {
 
@@ -60,6 +61,15 @@ public abstract class Transport<T> {
     }
 
     public abstract void printType();
+    public abstract void passDiagnostics() throws NoDiagnosticsRequired;
+
+    public boolean isDiagnostics() {
+        return diagnostics;
+    }
+
+    public void setDiagnostics(boolean diagnostics) {
+        this.diagnostics = diagnostics;
+    }
 
     public  String toString(){
         return "\n" + this.brand +
