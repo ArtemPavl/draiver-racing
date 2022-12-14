@@ -1,28 +1,31 @@
-import transport.Transport;
+package Driver;
 
+import transport.Cars;
+import transport.Transport;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.regex.Pattern;
 
-public class Driver<T extends Transport> {
+public abstract class Driver<T extends Transport> {
 
     private String name;
-    private String typeDriverLicense;
+    private char typeDriverLicense;
     private int drivingExperience;
-    private T transport;
+    public static ArrayList<Driver> drivers = new ArrayList<>();
     private static Driver[] driversParticipatingInTheRace = new Driver[0];
 
-
-
-    public Driver(String name, String typeDriverLicense, int drivingExperience) {
+    public Driver(String name, char typeDriverLicense, int drivingExperience) {
         if(name != null && !name.isEmpty() && !name.isBlank()){
             this.name = name;
         }else {
             this.name = "Водитель";
         }
 
-        setTypeDriverLicense(typeDriverLicense);
+        this.typeDriverLicense = typeDriverLicense;
 
         setDrivingExperience(drivingExperience);
+
+        drivers.add(this);
     }
 
     public static void addDriversparticipatingInTheRace(Driver... drivers){
@@ -37,13 +40,6 @@ public class Driver<T extends Transport> {
         return driversParticipatingInTheRace;
     }
 
-    public T getTransport(){
-        return this.transport;
-    }
-    
-    public void setTransport(T transport){
-            this.transport = transport;
-    }
 
     public void start(){
         System.out.println("Водитель " + getName() + " начал движение");
@@ -59,18 +55,6 @@ public class Driver<T extends Transport> {
 
     public String getName() {
         return name;
-    }
-
-    public String getTypeDriverLicense() {
-        return typeDriverLicense;
-    }
-
-    public void setTypeDriverLicense(String typeDriverLicense) {
-        if(typeDriverLicense != null && Pattern.matches("[BCD]", typeDriverLicense)){
-            this.typeDriverLicense = typeDriverLicense;
-        }else {
-            throw new IllegalArgumentException("Необходимо указать тип прав!");
-        }
     }
 
     public int getDrivingExperience() {

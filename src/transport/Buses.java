@@ -1,6 +1,9 @@
 package transport;
 
-public class Buses extends Transport implements Competing{
+import Driver.DriverD;
+import support.Mechanic;
+
+public class Buses<T extends DriverD> extends Transport implements Competing{
 
     public enum BodyTypes{
         ESPECIALLY_SMALL(null, 10),
@@ -39,12 +42,38 @@ public class Buses extends Transport implements Competing{
     }
 
     private BodyTypes bodyType;
+    private T driver;
     public Buses(String brand, String model, double engineVolume, BodyTypes bodyType) {
         super(brand, model, engineVolume);
         this.bodyType = bodyType;
     }
     public Buses(String brand, String model, double engineVolume) {
         this(brand, model, engineVolume, null);
+    }
+
+    @Override
+    public void addMechanic(Mechanic... mechanics) {
+        for (Mechanic mechanic : mechanics) {
+            for (Class typeTransport : mechanic.getTypeTransport()){
+                if(typeTransport.equals(Cars.class)){
+                    this.machineMechanics.add(mechanic);
+                }else {
+                    new RuntimeException("Механику " + mechanic.getName() +
+                            " не хватает квалификации для обслуживания " + getBrand() + " " + getModel());
+                }
+            }
+        }
+    }
+
+    public T getDriver() {
+        return driver;
+    }
+
+    public void setDriver(T driver) {
+        if (this.driver == null){
+            this.driver = driver;
+            this.driver.setTransport(this);
+        }
     }
     @Override
     public void pitStop() {

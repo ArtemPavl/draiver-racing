@@ -1,8 +1,10 @@
 package transport;
 
 import java.sql.Driver;
+import Driver.DriverB;
+import support.Mechanic;
 
-public class Cars extends Transport implements Competing{
+public class Cars<T extends DriverB> extends Transport implements Competing{
 
     public enum BodyTypes{
         SEDAN("Седан"),
@@ -30,7 +32,7 @@ public class Cars extends Transport implements Competing{
 
     };
     private BodyTypes bodyType;
-    private Driver driver;
+    private T driver;
 
     public Cars(String brand, String model, double engineVolume, BodyTypes bodyType) {
         super(brand, model, engineVolume);
@@ -39,6 +41,32 @@ public class Cars extends Transport implements Competing{
 
     public Cars(String brand, String model, double engineVolume) {
         this(brand, model, engineVolume, null);
+    }
+
+    @Override
+    public void addMechanic(Mechanic... mechanics) {
+        for (Mechanic mechanic : mechanics) {
+            for (Class typeTransport : mechanic.getTypeTransport()){
+                if(typeTransport.equals(Cars.class)){
+                    this.machineMechanics.add(mechanic);
+                    break;
+                }else {
+                    throw new RuntimeException("Механику " + mechanic.getName() +
+                            " не хватает квалификации для обслуживания " + getBrand() + " " + getModel());
+                }
+            }
+        }
+    }
+
+    public T getDriver() {
+        return driver;
+    }
+
+    public void setDriver(T driver) {
+        if (this.driver == null){
+            this.driver = driver;
+            this.driver.setTransport(this);
+        }
     }
 
     @Override
@@ -81,5 +109,8 @@ public class Cars extends Transport implements Competing{
     public String toString() {
         return super.toString() +
                 getBodyType().toString();
+    }
+
+    private class DriverB {
     }
 }
