@@ -3,12 +3,15 @@ package support;
 import transport.Transport;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 
 public class Mechanic  {
 
     private String name;
     private String company;
-    public static ArrayList<Mechanic> mechanics = new ArrayList<>();
+    public static Set<Mechanic> mechanics = new HashSet<>();
     private ArrayList<Transport> transports = new ArrayList<>();
     private ArrayList<Class> typeTransport = new ArrayList<>();
 
@@ -55,5 +58,18 @@ public class Mechanic  {
                 "\nИмя: " + name +
                 "\nКомпания: " + company +
                 "\nСпециализация: " + this.typeTransport;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Mechanic mechanic = (Mechanic) o;
+        return Objects.equals(name, mechanic.name) && Objects.equals(company, mechanic.company) && Objects.equals(transports, mechanic.transports) && Objects.equals(typeTransport, mechanic.typeTransport);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, company, transports, typeTransport);
     }
 }

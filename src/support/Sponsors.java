@@ -1,12 +1,15 @@
 package support;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 
 public class Sponsors {
 
     private String name;
     private int supportAmount;
-    public static ArrayList<Sponsors> sponsors = new ArrayList<>();
+    public static Set<Sponsors> sponsors = new HashSet<>();
 
     public Sponsors (String name, int supportAmount){
         if(name != null && !name.isEmpty() && !name.isBlank()){
@@ -37,5 +40,18 @@ public class Sponsors {
     @Override
     public String toString() {
         return "\"" + name + "\"";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Sponsors sponsors = (Sponsors) o;
+        return supportAmount == sponsors.supportAmount && Objects.equals(name, sponsors.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, supportAmount);
     }
 }

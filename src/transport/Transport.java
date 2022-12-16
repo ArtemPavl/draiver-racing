@@ -1,7 +1,6 @@
 package transport;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Objects;
+import java.util.*;
+
 import Driver.*;
 import support.*;
 
@@ -10,7 +9,7 @@ public abstract class Transport<T extends Driver> {
     private String brand;
     private String model;
     private double engineVolume;
-    public static ArrayList<Transport> transports = new ArrayList<>();
+    public static Set<Transport> transports = new HashSet<>();
     protected ArrayList<Mechanic> machineMechanics = new ArrayList<>();
     private ArrayList<Sponsors> machineSponsors = new ArrayList<>();
     private boolean diagnostics = false;

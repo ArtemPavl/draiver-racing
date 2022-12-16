@@ -2,8 +2,8 @@ package Driver;
 
 import transport.Cars;
 import transport.Transport;
-import java.util.ArrayList;
-import java.util.Arrays;
+
+import java.util.*;
 import java.util.regex.Pattern;
 
 public abstract class Driver<T extends Transport> {
@@ -11,7 +11,7 @@ public abstract class Driver<T extends Transport> {
     private String name;
     private char typeDriverLicense;
     private int drivingExperience;
-    public static ArrayList<Driver> drivers = new ArrayList<>();
+    public static Set<Driver> drivers = new HashSet<>();
     private static Driver[] driversParticipatingInTheRace = new Driver[0];
 
     public Driver(String name, char typeDriverLicense, int drivingExperience) {
@@ -67,5 +67,18 @@ public abstract class Driver<T extends Transport> {
         }else {
             this.drivingExperience = Math.abs(drivingExperience);
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Driver<?> driver = (Driver<?>) o;
+        return typeDriverLicense == driver.typeDriverLicense && drivingExperience == driver.drivingExperience && Objects.equals(name, driver.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, typeDriverLicense, drivingExperience);
     }
 }
